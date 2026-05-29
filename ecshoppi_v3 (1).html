@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EC Shoppi – Poovam's Finest Hypermarket</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A84C;--gold2:#E8C97A;--gold3:#F5E6C0;--gold-dark:#8B6914;
+  --wh:#FFFFFF;--cream:#FDFBF5;--cream2:#F7F3E8;--cream3:#EDE5CC;
+  --dk:#1A1208;--dk2:#2D2010;--dk3:#3D2E18;
+  --text:#2C1F0A;--text2:#6B5A3E;--text3:#9B8A6E;
+  --border:rgba(201,168,76,0.25);--border2:rgba(201,168,76,0.5);
+  --r:14px;--r2:24px;--r3:40px;
+  --shadow:0 8px 40px rgba(139,105,20,0.12);
+  --shadow2:0 20px 60px rgba(139,105,20,0.18);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--cream2)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:99px}
+
+/* ─── PAGE SYSTEM ─── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ─── HEADER / NAV ─── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:72px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+  background:rgba(253,251,245,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 4px 30px rgba(139,105,20,0.1)}
+.logo-wrap{display:flex;align-items:center;gap:11px;cursor:pointer;text-decoration:none}
+.logo-emblem{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  box-shadow:0 4px 16px rgba(201,168,76,0.4);
+  flex-shrink:0;
+  transition:transform .2s;
+}
+.logo-wrap:hover .logo-emblem{transform:scale(1.06) rotate(-3deg)}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--text);letter-spacing:-.3px;line-height:1}
+.logo-name span{color:var(--gold)}
+.logo-sub{font-size:.62rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:1px;font-weight:500}
+.nav-center{display:flex;gap:8px;list-style:none}
+.nav-center a{
+  color:var(--text2);text-decoration:none;font-size:.85rem;font-weight:500;
+  padding:7px 16px;border-radius:99px;
+  transition:all .2s;
+}
+.nav-center a:hover,.nav-center a.active{color:var(--gold-dark);background:rgba(201,168,76,0.1)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.hdr-offer-btn{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:var(--dk);padding:9px 22px;border-radius:99px;
+  font-size:.83rem;font-weight:700;border:none;cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 16px rgba(201,168,76,0.35);
+  transition:all .25s;
+  display:flex;align-items:center;gap:6px;
+}
+.hdr-offer-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.5)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.mob-nav{display:none;flex-direction:column;gap:0;background:var(--cream);border-bottom:1px solid var(--border);position:fixed;top:72px;left:0;right:0;z-index:199}
+.mob-nav.open{display:flex}
+.mob-nav a{color:var(--text2);text-decoration:none;font-size:.95rem;font-weight:600;padding:14px 5%;border-bottom:1px solid var(--border)}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:100px 5% 60px;
+  background:var(--cream);
+  position:relative;overflow:hidden;
+}
+/* Subtle gold grid */
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:72px 72px;
+  opacity:.5;
+}
+/* Gold glow */
+.hero-glow{position:absolute;top:-100px;right:-100px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);pointer-events:none}
+.hero-glow2{position:absolute;bottom:-200px;left:-150px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 70%);pointer-events:none}
+
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;max-width:1300px;margin:0 auto;width:100%}
+.hero-left{}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.1);border:1px solid var(--border2);color:var(--gold-dark);padding:5px 14px;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:26px}
+.eyebrow-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:blink 1.6s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,6vw,5.5rem);
+  font-weight:700;
+  line-height:1.02;
+  letter-spacing:-.04em;
+  color:var(--text);
+  margin-bottom:24px;
+}
+.hero h1 .gold-line{
+  color:var(--gold);
+  position:relative;display:inline-block;
+}
+.hero h1 .gold-line::after{
+  content:'';position:absolute;left:0;bottom:-4px;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);
+  border-radius:2px;
+}
+.hero-sub{font-size:1rem;color:var(--text2);line-height:1.8;max-width:460px;margin-bottom:40px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.cta-primary{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:var(--dk);padding:15px 34px;border-radius:99px;
+  font-weight:700;font-size:.95rem;border:none;cursor:pointer;font-family:inherit;
+  box-shadow:0 6px 20px rgba(201,168,76,.35);
+  transition:all .25s;display:inline-flex;align-items:center;gap:8px;
+  text-decoration:none;
+}
+.cta-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(201,168,76,.5)}
+.cta-outline{
+  border:1.5px solid var(--border2);color:var(--text2);
+  padding:15px 34px;border-radius:99px;
+  font-weight:600;font-size:.95rem;cursor:pointer;background:transparent;font-family:inherit;
+  transition:all .25s;display:inline-flex;align-items:center;gap:8px;
+  text-decoration:none;
+}
+.cta-outline:hover{border-color:var(--gold);color:var(--gold-dark);background:rgba(201,168,76,.06)}
+.hero-stats{display:flex;gap:0;border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;background:var(--wh);box-shadow:var(--shadow)}
+.h-stat{flex:1;padding:18px 20px;text-align:center;border-right:1px solid var(--border)}
+.h-stat:last-child{border-right:none}
+.h-stat-n{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold-dark);line-height:1}
+.h-stat-l{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:4px;font-weight:600}
+
+/* ─── HERO ANIMATION CANVAS ─── */
+.hero-right{position:relative;display:flex;align-items:center;justify-content:center}
+.anim-stage{
+  width:100%;max-width:480px;
+  height:480px;
+  position:relative;
+  background:var(--wh);
+  border-radius:var(--r2);
+  border:1px solid var(--border2);
+  box-shadow:var(--shadow2);
+  overflow:hidden;
+}
+/* Store shelf background */
+.shelf-bg{position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(180deg,var(--cream) 0%,var(--cream2) 100%)}
+.shelf-line{position:absolute;bottom:40%;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold3),var(--gold),var(--gold3),transparent);opacity:.7}
+.shelf-line2{position:absolute;bottom:20%;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cream3),var(--gold3),var(--cream3),transparent);opacity:.6}
+
+/* Floating items */
+.float-item{
+  position:absolute;
+  font-size:2.2rem;
+  animation:floatItem 1s ease-out forwards;
+  pointer-events:none;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+@keyframes floatItem{
+  0%{opacity:0;transform:scale(0.3) rotate(-20deg)}
+  60%{opacity:1;transform:scale(1.1) rotate(5deg)}
+  100%{opacity:1;transform:scale(1) rotate(0deg)}
+}
+
+/* Shopping man SVG animation */
+.man-wrap{
+  position:absolute;bottom:60px;
+  animation:manWalk 4s ease-in-out infinite;
+}
+@keyframes manWalk{
+  0%{left:-80px;opacity:0}
+  10%{opacity:1}
+  40%{left:50%;opacity:1}
+  60%{left:50%;opacity:1}
+  85%{left:110%;opacity:1}
+  100%{left:110%;opacity:0}
+}
+
+/* Cart */
+.cart-wrap{
+  position:absolute;bottom:30px;right:30px;
+  animation:cartBob 2s ease-in-out infinite;
+}
+@keyframes cartBob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.cart-svg{width:80px;height:80px}
+
+/* Items flying into cart */
+.fly-item{
+  position:absolute;
+  font-size:1.8rem;
+  pointer-events:none;
+  animation:flyToCart 1.2s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes flyToCart{
+  0%{opacity:1;transform:scale(1)}
+  50%{opacity:1;transform:scale(0.8)}
+  100%{opacity:0;transform:scale(0.2) translate(80px,80px)}
+}
+
+/* Pop badge */
+.ec-pop{
+  position:absolute;top:30px;left:50%;transform:translateX(-50%) scale(0);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--dk);padding:12px 24px;border-radius:99px;
+  font-weight:800;font-size:1rem;white-space:nowrap;
+  box-shadow:0 8px 30px rgba(201,168,76,0.5);
+  animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  font-family:'Cormorant Garamond',serif;letter-spacing:.5px;
+  z-index:10;
+}
+.ec-pop::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--gold2);border-bottom:none}
+@keyframes popIn{to{transform:translateX(-50%) scale(1)}}
+
+.stage-label{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:.7rem;color:var(--text3);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+/* ─── TICKER ─── */
+.ticker{background:linear-gradient(90deg,var(--gold) 0%,var(--gold2) 50%,var(--gold) 100%);padding:12px 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:tick 32s linear infinite}
+.ticker-track .ti{font-size:.78rem;font-weight:700;color:var(--dk);letter-spacing:1.5px;text-transform:uppercase;padding:0 28px;display:inline-flex;align-items:center;gap:10px}
+.ticker-track .ti::after{content:'✦';font-size:.5rem;color:var(--dk2);opacity:.5}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ─── SECTION BASE ─── */
+section{padding:100px 5%}
+.section-inner{max-width:1300px;margin:0 auto}
+.s-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:14px}
+.s-eyebrow::before{content:'';width:20px;height:1.5px;background:var(--gold)}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.4rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--text);margin-bottom:16px}
+.s-sub{font-size:.97rem;color:var(--text2);line-height:1.8;max-width:520px;margin-bottom:60px}
+.gold-text{color:var(--gold)}
+
+/* ─── CATEGORIES ─── */
+.categories{background:var(--wh)}
+.cat-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:20px}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.cat-card{
+  border:1px solid var(--border2);border-radius:var(--r2);
+  padding:30px 22px;text-align:center;
+  background:var(--cream);cursor:pointer;
+  transition:all .35s;position:relative;overflow:hidden;
+}
+.cat-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,.08) 0%,transparent 70%);
+  opacity:0;transition:opacity .35s;
+}
+.cat-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 20px 50px rgba(201,168,76,.18)}
+.cat-card:hover::before{opacity:1}
+.cat-card.featured{grid-column:span 2;display:flex;align-items:center;gap:24px;text-align:left;padding:32px 30px}
+.cat-icon-ring{
+  width:68px;height:68px;border-radius:20px;flex-shrink:0;
+  border:1.5px solid var(--border2);
+  background:var(--wh);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin:0 auto 16px;
+  transition:all .3s;
+  box-shadow:0 4px 16px rgba(201,168,76,.1);
+}
+.cat-card.featured .cat-icon-ring{margin:0;border-radius:18px;width:76px;height:76px;font-size:2.2rem}
+.cat-card:hover .cat-icon-ring{background:rgba(201,168,76,.08);border-color:var(--gold);transform:rotate(-6deg) scale(1.08)}
+.cat-name{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.cat-desc{font-size:.78rem;color:var(--text3);line-height:1.5}
+.cat-card.featured .cat-name{font-size:1.15rem;margin-bottom:6px}
+
+/* ─── OFFERS SECTION ─── */
+.offers-section{background:var(--cream2)}
+.offer-cta-banner{
+  background:linear-gradient(135deg,var(--gold-dark) 0%,var(--dk2) 50%,var(--dk) 100%);
+  border-radius:var(--r2);padding:60px;
+  display:flex;align-items:center;justify-content:space-between;gap:40px;
+  flex-wrap:wrap;position:relative;overflow:hidden;
+  margin-bottom:60px;
+}
+.offer-cta-banner::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(232,201,122,.1);
+}
+.offer-cta-banner::after{
+  content:'';position:absolute;bottom:-100px;left:10%;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(232,201,122,.06);
+}
+.ocb-left{position:relative;z-index:1}
+.ocb-left h3{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--wh);line-height:1.1;margin-bottom:12px}
+.ocb-left p{color:rgba(245,230,192,.75);font-size:.93rem;max-width:420px;line-height:1.7}
+.ocb-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.ocb-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--gold3);padding:10px 18px;border-radius:12px;font-size:.82rem;font-weight:600;white-space:nowrap;transition:all .2s}
+.ocb-badge:hover{background:rgba(255,255,255,.12)}
+.ocb-main-btn{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:var(--dk);padding:16px 36px;border-radius:99px;
+  font-weight:800;font-size:1rem;border:none;cursor:pointer;font-family:inherit;
+  box-shadow:0 6px 24px rgba(201,168,76,.5);
+  transition:all .25s;
+  position:relative;
+}
+.ocb-main-btn::after{content:'';position:absolute;inset:-5px;border-radius:99px;border:2px solid var(--gold2);opacity:0;animation:pulseGold 2.5s ease-out infinite}
+@keyframes pulseGold{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.2)}}
+.ocb-main-btn:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(201,168,76,.7)}
+
+/* ─── FEATURES ─── */
+.features-section{background:var(--wh)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feat-card{
+  border:1px solid var(--border2);border-radius:var(--r2);
+  padding:36px 30px;background:var(--cream);
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.feat-card::after{
+  content:'';position:absolute;bottom:-40px;right:-40px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(201,168,76,.06);
+  transition:all .4s;
+}
+.feat-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 16px 48px rgba(201,168,76,.15)}
+.feat-card:hover::after{transform:scale(2.5)}
+.feat-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.04));
+  border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:20px;
+}
+.feat-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.feat-body{font-size:.85rem;color:var(--text2);line-height:1.7}
+
+/* ─── CONTACT ─── */
+.contact-section{background:var(--cream2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.contact-left h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.15}
+.contact-left p{color:var(--text2);font-size:.95rem;line-height:1.8;margin-bottom:36px}
+.c-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.c-card{
+  display:flex;align-items:center;gap:16px;
+  background:var(--wh);border:1px solid var(--border2);border-radius:var(--r);
+  padding:18px 20px;transition:all .25s;
+}
+.c-card:hover{border-color:var(--gold);box-shadow:0 6px 24px rgba(201,168,76,.12)}
+.c-ic{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.04));
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+}
+.c-card-txt strong{display:block;font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:3px}
+.c-card-txt span{font-size:.92rem;font-weight:600;color:var(--text)}
+.c-card-txt a{color:var(--gold-dark);text-decoration:none}
+.c-card-txt a:hover{text-decoration:underline}
+.map-wrap{border-radius:var(--r2);overflow:hidden;border:1px solid var(--border2);box-shadow:var(--shadow)}
+.map-wrap iframe{width:100%;height:260px;border:0;display:block}
+
+/* FORM */
+.contact-form-wrap{
+  background:var(--wh);border:1px solid var(--border2);
+  border-radius:var(--r2);padding:44px;
+  box-shadow:var(--shadow);
+}
+.contact-form-wrap h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--text);margin-bottom:28px}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:.75rem;font-weight:700;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.fg input,.fg textarea,.fg select{
+  width:100%;background:var(--cream);border:1.5px solid var(--border2);color:var(--text);
+  border-radius:10px;padding:13px 16px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.fg textarea{height:110px;resize:vertical}
+.fg select option{background:var(--cream)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-submit{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:var(--dk);border:none;border-radius:12px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:800;
+  cursor:pointer;transition:all .2s;letter-spacing:.3px;
+}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.4)}
+.form-success{display:none;text-align:center;padding:30px;color:var(--gold-dark);font-weight:600;font-size:1rem}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--dk);
+  padding:72px 5% 32px;
+}
+.footer-top{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px}
+.foot-brand .logo-wrap{margin-bottom:18px}
+.foot-brand p{font-size:.85rem;color:rgba(245,230,192,.55);line-height:1.8;max-width:280px}
+.foot-col h4{font-size:.75rem;font-weight:700;color:var(--gold3);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col a{color:rgba(245,230,192,.5);text-decoration:none;font-size:.85rem;transition:color .2s}
+.foot-col a:hover{color:var(--gold2)}
+.footer-divider{height:1px;background:rgba(201,168,76,.15);margin-bottom:28px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:.78rem;color:rgba(245,230,192,.35)}
+.footer-bottom span{color:var(--gold2)}
+
+/* ─── OFFERS PAGE ─── */
+.offers-pg-hero{
+  background:var(--dk);
+  padding:100px 5% 60px;
+  border-bottom:1px solid rgba(201,168,76,.2);
+  position:relative;overflow:hidden;
+}
+.offers-pg-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(201,168,76,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.06) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+.offers-pg-hero-inner{position:relative;z-index:1;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.offers-pg-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;color:var(--wh);line-height:1.1}
+.offers-pg-hero h1 em{color:var(--gold2);font-style:normal}
+.offers-pg-hero p{color:rgba(245,230,192,.6);font-size:.95rem;margin-top:10px;max-width:420px}
+.date-card{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:14px 24px;text-align:center;color:var(--gold2)}
+.date-card .dlabel{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:.8}
+.date-card .dbig{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;display:block;margin-top:2px}
+
+.offers-body{max-width:1300px;margin:0 auto;padding:56px 5%}
+.offers-filter-bar{display:flex;gap:10px;margin-bottom:40px;flex-wrap:wrap}
+.f-chip{
+  background:var(--wh);border:1.5px solid var(--border2);
+  color:var(--text2);padding:8px 20px;border-radius:99px;
+  font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;
+}
+.f-chip:hover,.f-chip.on{background:rgba(201,168,76,.1);border-color:var(--gold);color:var(--gold-dark)}
+.offers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+.offer-card{
+  background:var(--wh);border:1px solid var(--border2);border-radius:var(--r2);
+  overflow:hidden;transition:all .3s;cursor:pointer;
+}
+.offer-card:hover{transform:translateY(-7px);border-color:var(--gold);box-shadow:0 20px 56px rgba(201,168,76,.18)}
+.oc-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--cream2)}
+.oc-placeholder{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--cream2),var(--cream3));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.oc-body{padding:20px 22px}
+.oc-tag{display:inline-block;background:rgba(201,168,76,.1);border:1px solid var(--border2);color:var(--gold-dark);padding:3px 12px;border-radius:99px;font-size:.68rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.oc-tag.fresh{background:rgba(39,174,96,.08);border-color:rgba(39,174,96,.3);color:#1a7a3a}
+.oc-name{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3}
+.oc-desc{font-size:.82rem;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.oc-foot{display:flex;align-items:center;justify-content:space-between}
+.oc-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold-dark)}
+.oc-meta{font-size:.73rem;color:var(--text3);display:flex;gap:10px;align-items:center}
+.pdf-chip{display:inline-flex;align-items:center;gap:4px;background:var(--cream2);border:1px solid var(--border2);color:var(--text2);padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:600}
+
+/* Empty state */
+.empty{text-align:center;padding:80px 20px;grid-column:1/-1}
+.empty .ei{font-size:4rem;margin-bottom:14px;opacity:.3;display:block}
+.empty h3{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty p{color:var(--text3);font-size:.9rem}
+
+/* Modal */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(26,18,8,.75);z-index:800;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-bg.show{display:flex}
+.modal-box{background:var(--wh);border-radius:var(--r2);max-width:620px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 40px 120px rgba(0,0,0,.3)}
+.modal-img-top{width:100%;max-height:340px;object-fit:contain;background:var(--cream2);display:block;border-radius:var(--r2) var(--r2) 0 0}
+.modal-body-inner{padding:32px 36px}
+.modal-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:grid;place-items:center;z-index:10;transition:background .2s}
+.modal-close:hover{background:rgba(0,0,0,.7)}
+.m-tag{display:inline-block;background:rgba(201,168,76,.1);border:1px solid var(--border2);color:var(--gold-dark);padding:4px 14px;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px}
+.modal-box h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.2}
+.modal-box .m-desc{font-size:.93rem;color:var(--text2);line-height:1.75;margin-bottom:22px}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.m-info{background:var(--cream);border:1px solid var(--border2);border-radius:12px;padding:14px 16px}
+.m-info .ml{font-size:.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:4px}
+.m-info .mv{font-size:.92rem;font-weight:700;color:var(--text)}
+.m-info .mv.gold{color:var(--gold-dark);font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+.pdf-dl-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dk);padding:13px 26px;border-radius:99px;font-weight:800;font-size:.88rem;cursor:pointer;border:none;font-family:inherit;transition:all .2s;text-decoration:none}
+.pdf-dl-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.4)}
+
+/* ─── ADMIN PAGE ─── */
+.admin-pg{background:var(--cream);min-height:100vh}
+.admin-header-bar{
+  background:var(--dk);
+  padding:100px 5% 48px;
+  border-bottom:1px solid rgba(201,168,76,.2);
+}
+.admin-header-bar h1{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--wh);margin-bottom:8px}
+.admin-header-bar p{color:rgba(245,230,192,.55);font-size:.9rem}
+.admin-inner{max-width:1000px;margin:0 auto;padding:48px 5%}
+
+/* Login */
+.login-box{
+  background:var(--wh);border:1px solid var(--border2);border-radius:var(--r2);
+  padding:52px 48px;max-width:440px;margin:0 auto;
+  box-shadow:var(--shadow2);
+}
+.login-box .lbrand{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
+.login-box h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--text);text-align:center;margin-bottom:8px}
+.login-box .lsub{text-align:center;color:var(--text3);font-size:.85rem;margin-bottom:32px}
+.lerr{color:#B91C1C;font-size:.82rem;margin-top:6px;display:none}
+.lerr.show{display:block}
+.login-note{text-align:center;font-size:.75rem;color:var(--text3);margin-top:18px}
+.login-note a{color:var(--gold-dark);cursor:pointer;text-decoration:underline}
+
+/* Dashboard */
+.dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:16px}
+.dash-top h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--text)}
+.dash-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-sm{padding:9px 20px;border-radius:99px;font-size:.8rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--text2)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold-dark)}
+.btn-danger{background:rgba(185,28,28,.08);border:1.5px solid rgba(185,28,28,.2);color:#B91C1C}
+.btn-danger:hover{background:rgba(185,28,28,.14)}
+
+.add-form-card{background:var(--wh);border:1px solid var(--border2);border-radius:var(--r2);padding:36px;margin-bottom:36px;box-shadow:var(--shadow)}
+.add-form-card h3{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.form-r2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.upload-zone{
+  border:2px dashed var(--border2);border-radius:12px;
+  padding:30px 20px;text-align:center;cursor:pointer;
+  transition:all .3s;position:relative;background:var(--cream);
+}
+.upload-zone:hover{border-color:var(--gold);background:rgba(201,168,76,.04)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.uz-icon{font-size:1.8rem;margin-bottom:10px;opacity:.5;display:block}
+.uz-tx{font-size:.83rem;color:var(--text3)}
+.uz-tx strong{color:var(--gold-dark);display:block;margin-bottom:4px}
+.preview-box{margin-top:12px;display:none}
+.preview-box img{max-width:100%;max-height:150px;border-radius:10px;object-fit:contain;background:var(--cream2);padding:8px}
+.pdf-name-tag{margin-top:10px;display:none;background:rgba(201,168,76,.1);border:1px solid var(--border2);color:var(--gold-dark);padding:8px 14px;border-radius:8px;font-size:.78rem;font-weight:600}
+.form-submit-row{display:flex;justify-content:flex-end;margin-top:8px}
+.submit-gold{background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);color:var(--dk);border:none;border-radius:12px;padding:13px 40px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s}
+.submit-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.4)}
+
+.manage-card{background:var(--wh);border:1px solid var(--border2);border-radius:var(--r2);padding:32px;box-shadow:var(--shadow)}
+.manage-card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.manage-card h3 span{font-size:.82rem;color:var(--text3);font-weight:500}
+.admin-list{display:flex;flex-direction:column;gap:12px}
+.ali{display:flex;align-items:center;gap:16px;border:1px solid var(--border2);border-radius:var(--r);padding:16px 20px;transition:all .2s;background:var(--cream)}
+.ali:hover{border-color:var(--gold);background:var(--wh)}
+.ali-thumb{width:54px;height:54px;border-radius:10px;background:var(--cream2);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:1.4rem;border:1px solid var(--border2)}
+.ali-thumb img{width:100%;height:100%;object-fit:cover}
+.ali-info{flex:1;min-width:0}
+.ali-name{font-size:.92rem;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px}
+.ali-meta{font-size:.73rem;color:var(--text3);display:flex;gap:10px;flex-wrap:wrap}
+.ali-del{width:34px;height:34px;border-radius:9px;background:transparent;border:1.5px solid rgba(185,28,28,.2);color:#B91C1C;cursor:pointer;display:grid;place-items:center;transition:all .2s;font-size:.9rem}
+.ali-del:hover{background:rgba(185,28,28,.08);border-color:rgba(185,28,28,.4)}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--gold);color:var(--dk);padding:13px 28px;border-radius:99px;font-weight:800;font-size:.88rem;transition:transform .35s ease;z-index:999;white-space:nowrap;pointer-events:none;box-shadow:0 6px 24px rgba(201,168,76,.4)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Reveal */
+.rev{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.rev.in{opacity:1;transform:none}
+
+/* ─── RESPONSIVE ─── */
+/* Tablet & Large Mobile (1024px and down) */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-right{max-width:400px;margin:0 auto}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-card.featured{grid-column:span 2}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:36px}
+}
+
+/* Tablet (768px and down) */
+@media(max-width:768px){
+  html{font-size:15px}
+  .nav-center,.nav-right .hdr-offer-btn{display:none}
+  .hamburger{display:flex}
+  .cat-grid{grid-template-columns:1fr 1fr}
+  .feat-grid{grid-template-columns:1fr}
+  .offer-cta-banner{padding:36px}
+  .form-r2{grid-template-columns:1fr}
+  .fg-row{grid-template-columns:1fr}
+  .m-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .hero{padding:80px 5% 50px;min-height:auto}
+  .anim-stage{height:300px;max-width:100%;margin:0 auto}
+  .shelf-line,.shelf-line2{display:none}
+  .contact-form-wrap{padding:28px}
+  .login-box{padding:36px 26px}
+  .hero h1{font-size:2.2rem}
+  .hero p{font-size:.9rem}
+  .cta-primary{padding:12px 24px;font-size:.9rem}
+  header{height:64px}
+  .logo-name{font-size:1.2rem}
+  .logo-sub{font-size:.55rem}
+}
+
+/* Mobile Medium (600px and down) */
+@media(max-width:600px){
+  html{font-size:14px}
+  .hero-inner{gap:28px}
+  .hero-right{max-width:100%;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:center}
+  .hero{padding:70px 4% 40px;margin-top:0}
+  .hero h1{font-size:2rem;line-height:1.2}
+  .hero p{font-size:.85rem;line-height:1.5}
+  .hero-eyebrow{font-size:.65rem;padding:4px 12px}
+  .h-stat{flex-direction:column;align-items:flex-start;gap:12px}
+  .h-stat-n{font-size:2rem}
+  .cta-primary,.btn-sm{padding:11px 20px;font-size:.85rem;min-height:44px;min-width:44px}
+  .hdr-offer-btn{padding:8px 16px;font-size:.75rem}
+  .cat-grid{grid-template-columns:1fr}
+  .cat-card{padding:24px}
+  .cat-icon-ring{width:64px;height:64px;font-size:2rem}
+  .feat-grid{grid-template-columns:1fr}
+  .modal-box{width:90vw;max-height:85vh;padding:24px}
+  .add-form-card{padding:20px}
+  .form-r2,.fg-row{grid-template-columns:1fr}
+  .fg{margin-bottom:16px}
+  input,.select,textarea{font-size:16px;padding:11px 12px}
+  button{touch-action:manipulation}
+  .offer-card{padding:16px}
+  .offer-card h4{font-size:1rem}
+  .contact-grid{gap:28px}
+  .contact-form-wrap{padding:20px}
+  .footer{padding:32px 4%}
+  .anim-stage{height:280px;width:100%;max-width:100%;display:block !important;visibility:visible !important;opacity:1 !important}
+}
+
+/* Mobile Small (480px and down) - iPhone SE */
+@media(max-width:480px){
+  html{font-size:13.5px}
+  header{height:60px;padding:0 4%}
+  .logo-emblem{width:36px;height:36px;font-size:1.1rem}
+  .logo-name{font-size:1rem}
+  .logo-sub{display:none}
+  .mob-nav{top:60px}
+  .hero-right{width:100%;max-width:100%;display:flex !important;visibility:visible !important;opacity:1 !important}
+  .anim-stage{height:200px;width:100%;max-width:100%;display:block !important;visibility:visible !important;opacity:1 !important;margin:0 !important;border-radius:12px}
+  .shelf-line,.shelf-line2{display:none !important}
+  .float-item{font-size:1.2rem !important}
+  .shopping-man{animation:manWalk 3s ease-in-out infinite !important;width:35px !important;height:50px !important;display:block !important}
+  .shopping-cart{animation:cartBob 2s ease-in-out infinite !important;width:40px !important;height:35px !important;display:block !important}
+  .shopping-item{animation:flyToCart 1.2s cubic-bezier(0.4,0,0.2,1) forwards !important;display:block !important}
+  .hero{padding:50px 4% 20px}
+  .hero h1{font-size:1.8rem;line-height:1.2}
+  .hero p{font-size:.8rem}
+  .hero-eyebrow{font-size:.6rem;padding:3px 10px}
+  .h-stat-n{font-size:1.6rem}
+  .h-stat-l{font-size:.6rem}
+  .cta-primary,.btn-sm{padding:10px 18px;font-size:.8rem;min-height:42px}
+  .cat-grid{grid-template-columns:1fr;gap:12px}
+  .cat-card{padding:16px;text-align:center}
+  .cat-card.featured{flex-direction:column;grid-column:span 1}
+  .cat-card.featured .cat-icon-ring{margin:0 auto;width:56px;height:56px;font-size:1.8rem}
+  .cat-card h3{font-size:1rem}
+  .cat-card p{font-size:.75rem}
+  .feat-grid{grid-template-columns:1fr;gap:12px}
+  .feat-card{padding:16px}
+  .modal-box{width:95vw;max-height:80vh;padding:16px}
+  .modal-close{font-size:1.2rem;padding:4px}
+  .add-form-card{padding:16px;margin-bottom:20px}
+  .add-form-card h3{font-size:1.1rem}
+  .form-r2,.fg-row{grid-template-columns:1fr;gap:12px}
+  .fg{margin-bottom:12px}
+  label{font-size:.8rem}
+  input,select,textarea{font-size:16px;padding:10px 10px;border-radius:8px}
+  input[type="file"]{padding:6px}
+  .form-submit,.form-submit-row button{padding:10px 16px;font-size:.8rem;width:100%;min-height:42px}
+  .form-submit:hover{transform:none;box-shadow:0 4px 12px rgba(201,168,76,.3)}
+  .offer-card{padding:12px;border-radius:10px}
+  .offer-card h4{font-size:.9rem}
+  .offer-card p{font-size:.75rem}
+  .offer-cta-banner{padding:20px 4%;text-align:center}
+  .offer-cta-banner h2{font-size:1.5rem;margin-bottom:12px}
+  .offer-cta-banner p{font-size:.75rem;margin-bottom:16px}
+  .contact-grid{grid-template-columns:1fr;gap:20px}
+  .contact-left h2{font-size:1.6rem}
+  .contact-left p{font-size:.8rem}
+  .contact-form-wrap{padding:16px}
+  .contact-form-wrap h3{font-size:1.2rem}
+  .login-box{padding:20px}
+  .login-box h2{font-size:1.6rem}
+  .login-box .lbrand{margin-bottom:20px}
+  .lbrand .logo-emblem{width:40px;height:40px}
+  .admin-inner{padding:16px 4%}
+  .admin-inner h2{font-size:1.8rem}
+  .dash-top{flex-direction:column;gap:16px}
+  .dash-actions{flex-direction:column;width:100%}
+  .dash-actions button{width:100%;margin-top:8px}
+  .footer-top{grid-template-columns:1fr;gap:20px;text-align:center}
+  .footer-col h4{font-size:.95rem;margin-bottom:12px}
+  .footer-col a{font-size:.75rem;line-height:1.8}
+  .footer{padding:24px 4%}
+}
+
+/* Mobile Extra Small (320px and down) */
+@media(max-width:320px){
+  html{font-size:13px}
+  header{height:56px;padding:0 3%}
+  .logo-name{font-size:.9rem}
+  .logo-emblem{width:32px;height:32px;font-size:1rem}
+  .hero{padding:50px 3% 25px}
+  .hero h1{font-size:1.6rem}
+  .hero p{font-size:.75rem}
+  .cta-primary{padding:9px 16px;font-size:.75rem}
+  .cat-card{padding:12px}
+  .cat-card h3{font-size:.9rem}
+  .form-submit{padding:9px 12px;font-size:.75rem}
+  input,select,textarea{font-size:16px;padding:8px}
+  .modal-box{width:96vw;padding:12px}
+}
+
+/* Reduce animations on mobile & for users with motion preferences */
+@media(max-width:768px){
+  .eyebrow-dot{animation:none;opacity:1}
+  .rev{animation:none;opacity:1;transform:none}
+  .ticker-track{animation:none}
+  .shelf-line,.shelf-line2{display:none !important}
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
+  }
+}
+
+/* Fix touch targets for mobile */
+@media(max-width:768px){
+  button,a,input[type="submit"]{min-height:44px;min-width:44px}
+  .cta-primary:active,.btn-sm:active{transform:scale(0.98)}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: MAIN
+════════════════════════════════════════ -->
+<div class="page active" id="pg-main">
+
+  <header id="hdr">
+    <div class="logo-wrap" onclick="showPage('pg-main')">
+      <div class="logo-emblem"><img src="ec img.png" alt="" style="width: 37px;"/></div>
+      <div>
+        <div class="logo-name">ec<span>shoppi</span></div>
+        <div class="logo-sub">Poovam · Kannur · Kerala</div>
+      </div>
+    </div>
+    <ul class="nav-center">
+      <li><a href="#about-anchor">About</a></li>
+      <li><a href="#departments">Departments</a></li>
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#contact-anchor">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="hdr-offer-btn" onclick="showPage('pg-offers')">🏷️ Today's Offers</button>
+    </div>
+    <button class="hamburger" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="mob-nav" id="mobNav">
+    <a href="#about-anchor" onclick="closeMob()">About</a>
+    <a href="#departments" onclick="closeMob()">Departments</a>
+    <a href="#why-us" onclick="closeMob()">Why Us</a>
+    <a href="#contact-anchor" onclick="closeMob()">Contact</a>
+    <a onclick="closeMob();showPage('pg-offers')" style="color:var(--gold-dark);cursor:pointer">🏷️ Today's Offers</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow"><span class="eyebrow-dot"></span> Kannur's Premier Hypermarket</div>
+        <h1>Your Complete<br>Shopping <span class="gold-line">Paradise</span><br>in Kerala</h1>
+        <p class="hero-sub">From crisp morning vegetables to the latest electronics — EC Shoppi is where Poovam shops. Premium quality, honest prices, and a warm welcome every single day.</p>
+        <div class="hero-ctas">
+          <button class="cta-primary" onclick="showPage('pg-offers')">🏷️ View Today's Offers</button>
+          <a class="cta-outline" href="#departments">Explore Departments</a>
+        </div>
+        <div class="hero-stats">
+          <div class="h-stat"><div class="h-stat-n">10K+</div><div class="h-stat-l">Products</div></div>
+          <div class="h-stat"><div class="h-stat-n">#1</div><div class="h-stat-l">Retail Park</div></div>
+          <div class="h-stat"><div class="h-stat-n">365</div><div class="h-stat-l">Days Open</div></div>
+          <div class="h-stat"><div class="h-stat-n">8AM</div><div class="h-stat-l">Opens Daily</div></div>
+        </div>
+      </div>
+
+      <!-- ANIMATED STAGE -->
+      <div class="hero-right">
+        <div class="anim-stage" id="animStage">
+          <div class="shelf-bg"></div>
+          <div class="shelf-line"></div>
+          <div class="shelf-line2"></div>
+          <!-- Items rendered by JS -->
+          <div style="position:absolute;top:10px;width:100%;text-align:center;font-size:.65rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;font-weight:600">EC Shoppi · Poovam</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ti">Fresh Produce</span><span class="ti">Electronics</span><span class="ti">Fashion & Apparel</span><span class="ti">Home & Kitchen</span><span class="ti">Beauty & Care</span><span class="ti">Organic Range</span><span class="ti">Dairy & Eggs</span><span class="ti">Bakery</span><span class="ti">Meat & Seafood</span><span class="ti">Toys & Kids</span><span class="ti">Cleaning</span><span class="ti">Packaged Foods</span>
+      <span class="ti">Fresh Produce</span><span class="ti">Electronics</span><span class="ti">Fashion & Apparel</span><span class="ti">Home & Kitchen</span><span class="ti">Beauty & Care</span><span class="ti">Organic Range</span><span class="ti">Dairy & Eggs</span><span class="ti">Bakery</span><span class="ti">Meat & Seafood</span><span class="ti">Toys & Kids</span><span class="ti">Cleaning</span><span class="ti">Packaged Foods</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about-anchor" style="background:var(--cream2);padding:100px 5%">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="about-grid-r">
+        <div class="rev">
+          <div class="s-eyebrow">Our Story</div>
+          <h2 class="s-title">Poovam's First<br>Full-Scale <span class="gold-text">Retail Park</span></h2>
+          <p style="color:var(--text2);line-height:1.85;margin-bottom:20px;font-size:.97rem">EC Shoppi was born from a simple but bold vision — to bring a world-class hypermarket experience to North Kerala. A place where every family from Taliparamba to Kannur can shop with confidence.</p>
+          <p style="color:var(--text2);line-height:1.85;margin-bottom:32px;font-size:.97rem">We believe every customer deserves the finest products at the fairest prices, served with the warmth only Kerala can offer. That belief is behind everything we do.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <span style="background:var(--wh);border:1.5px solid var(--border2);padding:10px 18px;border-radius:99px;font-size:.82rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:7px">📍 Poovam, Taliparamba</span>
+            <span style="background:var(--wh);border:1.5px solid var(--border2);padding:10px 18px;border-radius:99px;font-size:.82rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:7px">🕐 8AM – 10PM Daily</span>
+            <span style="background:var(--wh);border:1.5px solid var(--border2);padding:10px 18px;border-radius:99px;font-size:.82rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:7px">📞 +91 9746 162 233</span>
+          </div>
+        </div>
+        <div class="rev" style="transition-delay:.15s">
+          <div style="background:var(--dk);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow2)">
+            <div style="height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+              <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(201,168,76,.22) 0,rgba(201,168,76,.22) 1.5px,transparent 0,transparent 24px),repeating-linear-gradient(-45deg,rgba(30,20,8,.9) 0,rgba(30,20,8,.9) 1.5px,transparent 0,transparent 24px);background-size:24px 24px;"></div>
+              <div style="position:relative;z-index:2;text-align:center">
+                <div style="background:var(--gold);color:var(--dk);padding:12px 32px;border-radius:12px;font-size:1.8rem;font-weight:900;letter-spacing:-.5px;box-shadow:0 8px 28px rgba(0,0,0,.4);font-family:'Cormorant Garamond',serif">ecshoppi</div>
+                <div style="color:rgba(245,230,192,.45);font-size:.7rem;margin-top:12px;letter-spacing:2px;text-transform:uppercase">Poovam · Taliparamba · Kannur</div>
+              </div>
+            </div>
+            <div style="padding:24px 28px;display:flex;justify-content:space-between">
+              <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--gold2)">Kannur</div><div style="font-size:.68rem;color:rgba(245,230,192,.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px">District</div></div>
+              <div style="width:1px;background:rgba(201,168,76,.15)"></div>
+              <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--gold2)">Kerala</div><div style="font-size:.68rem;color:rgba(245,230,192,.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px">State</div></div>
+              <div style="width:1px;background:rgba(201,168,76,.15)"></div>
+              <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--gold2)">670142</div><div style="font-size:.68rem;color:rgba(245,230,192,.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px">PIN Code</div></div>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:var(--r);padding:20px 24px;margin-top:16px;display:flex;align-items:center;gap:14px">
+            <span style="font-size:2rem">⭐</span>
+            <div><div style="font-weight:700;color:var(--dk);font-size:.95rem">Highly Rated by Kannur Families</div><div style="font-size:.78rem;color:var(--dk2);opacity:.7;margin-top:2px">Trusted by thousands every month</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPARTMENTS -->
+  <section class="features-section" id="departments" style="background:var(--wh)">
+    <div class="section-inner">
+      <div class="cat-intro">
+        <div>
+          <div class="s-eyebrow rev">All Departments</div>
+          <h2 class="s-title rev">Everything Under<br>One <span class="gold-text">Roof</span></h2>
+        </div>
+        <p class="rev" style="color:var(--text2);font-size:.9rem;max-width:300px;text-align:right;line-height:1.7">From farm-fresh to flagship brands — every aisle is a discovery waiting to happen.</p>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card featured rev">
+          <div class="cat-icon-ring">🥦</div>
+          <div>
+            <div class="cat-name">Fresh Produce</div>
+            <div class="cat-desc" style="font-size:.85rem;line-height:1.65">Restocked daily from local farms — the freshest fruits, vegetables, and herbs in Kannur.</div>
+          </div>
+        </div>
+        <div class="cat-card rev" style="transition-delay:.06s"><div class="cat-icon-ring">📱</div><div class="cat-name">Electronics</div><div class="cat-desc">Latest gadgets & appliances</div></div>
+        <div class="cat-card rev" style="transition-delay:.12s"><div class="cat-icon-ring">👗</div><div class="cat-name">Fashion</div><div class="cat-desc">Men · Women · Kids</div></div>
+        <div class="cat-card rev" style="transition-delay:.06s"><div class="cat-icon-ring">🥛</div><div class="cat-name">Dairy & Eggs</div><div class="cat-desc">Fresh every morning</div></div>
+        <div class="cat-card rev" style="transition-delay:.12s"><div class="cat-icon-ring">🍞</div><div class="cat-name">Bakery</div><div class="cat-desc">Freshly baked daily</div></div>
+        <div class="cat-card rev" style="transition-delay:.18s"><div class="cat-icon-ring">🏠</div><div class="cat-name">Home & Kitchen</div><div class="cat-desc">Everything for your home</div></div>
+        <div class="cat-card rev" style="transition-delay:.06s"><div class="cat-icon-ring">💄</div><div class="cat-name">Beauty & Care</div><div class="cat-desc">Top brands & organics</div></div>
+        <div class="cat-card rev" style="transition-delay:.12s"><div class="cat-icon-ring">🍗</div><div class="cat-name">Meat & Seafood</div><div class="cat-desc">Fresh-cut daily</div></div>
+        <div class="cat-card rev" style="transition-delay:.18s"><div class="cat-icon-ring">🧸</div><div class="cat-name">Toys & Kids</div><div class="cat-desc">Safe, fun & educational</div></div>
+        <div class="cat-card rev" style="transition-delay:.06s"><div class="cat-icon-ring">🌿</div><div class="cat-name">Organic Range</div><div class="cat-desc">Certified organic products</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERS CALL TO ACTION -->
+  <section class="offers-section" id="offers-cta">
+    <div class="section-inner">
+      <div class="offer-cta-banner rev">
+        <div class="ocb-left">
+          <h3>Daily Deals &amp;<br>Fresh Offers</h3>
+          <p>Our team updates exclusive discounts every single day — across groceries, electronics, fashion, and more. Never miss a deal again.</p>
+        </div>
+        <div class="ocb-right">
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div class="ocb-badge">🥦 Fresh Produce Deals</div>
+            <div class="ocb-badge">📱 Electronics Sale</div>
+            <div class="ocb-badge">🏷️ Weekend Specials</div>
+            <div class="ocb-badge">🌿 Organic Offers</div>
+          </div>
+          <button class="ocb-main-btn" onclick="showPage('pg-offers')">View All Today's Offers →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="features-section" id="why-us" style="background:var(--wh)">
+    <div class="section-inner">
+      <div class="s-eyebrow rev">Why EC Shoppi</div>
+      <h2 class="s-title rev">The EC Shoppi <span class="gold-text">Promise</span></h2>
+      <p class="s-sub rev">We don't just sell products — we deliver a shopping experience that brings you back, every single time.</p>
+      <div class="feat-grid">
+        <div class="feat-card rev"><div class="feat-icon">🏷️</div><div class="feat-title">Honest, Unbeatable Prices</div><div class="feat-body">Direct partnerships with suppliers mean you always get maximum value. No hidden markups, ever.</div></div>
+        <div class="feat-card rev" style="transition-delay:.1s"><div class="feat-icon">🌿</div><div class="feat-title">Farm-Fresh Every Day</div><div class="feat-body">Our produce section is restocked daily from local farms — freshness you can see, smell, and taste.</div></div>
+        <div class="feat-card rev" style="transition-delay:.2s"><div class="feat-icon">😊</div><div class="feat-title">Warm Kerala Hospitality</div><div class="feat-body">Our friendly staff are always ready to help, guide, and make your shopping trip genuinely pleasant.</div></div>
+        <div class="feat-card rev"><div class="feat-icon">🅿️</div><div class="feat-title">Spacious Parking</div><div class="feat-body">Arrive stress-free. Our wide, well-lit parking area means your trip starts comfortably from the moment you arrive.</div></div>
+        <div class="feat-card rev" style="transition-delay:.1s"><div class="feat-icon">📦</div><div class="feat-title">10,000+ Products</div><div class="feat-body">From global brands to local favourites — the widest selection in Kannur, all under one roof.</div></div>
+        <div class="feat-card rev" style="transition-delay:.2s"><div class="feat-icon">🎉</div><div class="feat-title">Daily Offers & Specials</div><div class="feat-body">New deals every day across every department — festive bonanzas, weekend sales, flash discounts.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact-anchor">
+    <div class="section-inner">
+      <div class="s-eyebrow rev">Find Us</div>
+      <h2 class="s-title rev">Come Visit <span class="gold-text">EC Shoppi</span></h2>
+      <div class="contact-grid" style="margin-top:52px">
+        <div>
+          <p class="rev" style="color:var(--text2);font-size:.97rem;line-height:1.8;margin-bottom:36px">We're in the heart of Poovam, Taliparamba — easy to reach from Kannur city and all surrounding towns. Your favourite hypermarket is always close by.</p>
+          <div class="c-cards rev">
+            <div class="c-card">
+              <div class="c-ic">📍</div>
+              <div class="c-card-txt"><strong>Address</strong><span>Poovam, Taliparamba, Kannur District, Kerala – 670142</span></div>
+            </div>
+            <div class="c-card">
+              <div class="c-ic">📞</div>
+              <div class="c-card-txt"><strong>Phone</strong><span><a href="tel:+919746162233">+91 9746 162 233</a></span></div>
+            </div>
+            <div class="c-card">
+              <div class="c-ic">🕐</div>
+              <div class="c-card-txt"><strong>Hours</strong><span>Monday – Sunday · 8:00 AM – 10:00 PM</span></div>
+            </div>
+            <div class="c-card">
+              <div class="c-ic">🗺️</div>
+              <div class="c-card-txt"><strong>Nearby</strong><span>8 km from Taliparamba · 30 km from Kannur City</span></div>
+            </div>
+          </div>
+          <div class="map-wrap rev" style="margin-top:24px;transition-delay:.2s">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62328.4!2d75.35!3d12.07!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba45e5c7fa02151%3A0x0!2zVGFsaXBhcmFtYmE!5e0!3m2!1sen!2sin!4v1234" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="contact-form-wrap rev" style="transition-delay:.15s">
+          <h3>Send Us a Message</h3>
+          <div id="contactFormBody">
+            <div class="fg-row">
+              <div class="fg"><label>First Name</label><input type="text" placeholder="Arjun"></div>
+              <div class="fg"><label>Last Name</label><input type="text" placeholder="Nair"></div>
+            </div>
+            <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98XXX XXXXX"></div>
+            <div class="fg"><label>Email (optional)</label><input type="email" placeholder="you@example.com"></div>
+            <div class="fg">
+              <label>How can we help?</label>
+              <select>
+                <option>General Enquiry</option>
+                <option>Product Availability</option>
+                <option>Bulk / Wholesale Order</option>
+                <option>Feedback & Suggestions</option>
+                <option>Careers</option>
+              </select>
+            </div>
+            <div class="fg"><label>Message</label><textarea placeholder="Tell us what's on your mind..."></textarea></div>
+            <button class="form-submit" id="cFormBtn" onclick="submitContactForm()">Send Message →</button>
+          </div>
+          <div class="form-success" id="cFormSuccess" style="display:none">
+            <div style="font-size:2.5rem;margin-bottom:12px">✅</div>
+            <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px">Message Received!</div>
+            <div style="font-size:.88rem;color:var(--text2)">Thank you! Our team will get back to you shortly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:1300px;margin:0 auto">
+      <div class="footer-top">
+        <div class="foot-brand">
+          <div class="logo-wrap" style="margin-bottom:18px">
+            <div class="logo-emblem">🛒</div>
+            <div>
+              <div class="logo-name" style="color:var(--gold2)">ec<span style="color:var(--wh)">shoppi</span></div>
+              <div class="logo-sub" style="color:rgba(245,230,192,.4)">Poovam · Kannur · Kerala</div>
+            </div>
+          </div>
+          <p>Kannur's premier hypermarket — where thousands of families in Poovam, Taliparamba and beyond shop for everything they love.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="#departments">Fresh Produce</a></li>
+            <li><a href="#departments">Electronics</a></li>
+            <li><a href="#departments">Fashion</a></li>
+            <li><a href="#departments">Home & Kitchen</a></li>
+            <li><a href="#departments">Bakery</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about-anchor">About Us</a></li>
+            <li><a href="#why-us">Why EC Shoppi</a></li>
+            <li><a onclick="showPage('pg-offers');return false" style="cursor:pointer">Today's Offers</a></li>
+            <li><a href="#contact-anchor">Contact</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h4>Visit</h4>
+          <ul>
+            <li><a>Poovam, Taliparamba</a></li>
+            <li><a>Kannur District, Kerala</a></li>
+            <li><a>PIN – 670142</a></li>
+            <li><a href="tel:+919746162233">+91 9746 162 233</a></li>
+            <li><a>8AM – 10PM · Every Day</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 <span>EC Shoppi</span> · ECSHOPPI RETAIL LLP · All Rights Reserved</span>
+        <span>Poovam, Taliparamba, Kannur, Kerala – 670142</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- end pg-main -->
+
+
+<!-- ════════════════════════════════════════
+     PAGE: OFFERS
+════════════════════════════════════════ -->
+<div class="page" id="pg-offers">
+  <header id="hdr2" style="position:sticky;top:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(253,251,245,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)">
+    <div class="logo-wrap" onclick="showPage('pg-main')">
+      <div class="logo-emblem">🛒</div>
+      <div>
+        <div class="logo-name">ec<span>shoppi</span></div>
+        <div class="logo-sub">Poovam · Kannur · Kerala</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="cta-outline" style="padding:8px 20px;font-size:.82rem" onclick="showPage('pg-main')">← Back to Home</button>
+    </div>
+  </header>
+
+  <div class="offers-pg-hero">
+    <div class="offers-pg-hero-inner">
+      <div>
+        <h1>Today's <em>Best Deals</em></h1>
+        <p>Exclusive discounts across every department — updated daily by our team just for you.</p>
+      </div>
+      <div class="date-card">
+        <div class="dlabel">Offers valid</div>
+        <span class="dbig" id="todayDate"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offers-body">
+    <div class="offers-filter-bar">
+      <button class="f-chip on" onclick="filterOffers('all',this)">All Offers</button>
+      <button class="f-chip" onclick="filterOffers('sale',this)">🏷️ Sale</button>
+      <button class="f-chip" onclick="filterOffers('new',this)">✨ New Arrival</button>
+      <button class="f-chip" onclick="filterOffers('special',this)">⭐ Special</button>
+      <button class="f-chip" onclick="filterOffers('clearance',this)">🔥 Clearance</button>
+    </div>
+    <div class="offers-grid" id="offersGrid"></div>
+  </div>
+
+  <footer style="background:var(--dk);padding:36px 5%;text-align:center">
+    <div style="font-size:.82rem;color:rgba(245,230,192,.35)">© 2026 <span style="color:var(--gold2)">EC Shoppi</span> · Poovam, Taliparamba, Kannur – 670142</div>
+  </footer>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE: ADMIN (Hidden, accessed via URL)
+════════════════════════════════════════ -->
+<div class="page" id="pg-admin">
+  <header style="position:sticky;top:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(26,18,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.2)">
+    <div class="logo-wrap" onclick="showPage('pg-main')">
+      <div class="logo-emblem">🛒</div>
+      <div>
+        <div class="logo-name" style="color:var(--gold2)">ec<span style="color:var(--wh)">shoppi</span></div>
+        <div class="logo-sub" style="color:rgba(245,230,192,.4)">Owner Dashboard</div>
+      </div>
+    </div>
+    <button class="cta-outline" style="padding:8px 20px;font-size:.82rem;color:rgba(245,230,192,.6);border-color:rgba(201,168,76,.3)" onclick="showPage('pg-main')">← Back to Website</button>
+  </header>
+
+  <div class="admin-pg">
+    <!-- LOGIN -->
+    <div id="loginSection" style="min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:40px 5%;background:var(--cream2)">
+      <div class="login-box">
+        <div class="lbrand">
+          <div class="logo-emblem" style="width:48px;height:48px;font-size:1.4rem">🛒</div>
+          <div class="logo-name" style="font-size:1.5rem">ec<span>shoppi</span></div>
+        </div>
+        <h2>Owner Login</h2>
+        <p class="lsub">Sign in to manage daily offers & discounts for your customers</p>
+        <div class="fg"><label>Username</label><input type="text" id="lUser" placeholder="Enter your username" autocomplete="username"></div>
+        <div class="fg">
+          <label>Password</label>
+          <input type="password" id="lPass" placeholder="Enter your password" autocomplete="current-password">
+          <div class="lerr" id="lErr">Incorrect username or password. Please try again.</div>
+        </div>
+        <button class="form-submit" id="lBtn" onclick="doLogin()">Sign In to Dashboard →</button>
+        <p class="login-note">🔐 Restricted access · EC Shoppi management only</p>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashSection" style="display:none;background:var(--cream);min-height:calc(100vh - 72px)">
+      <div class="admin-inner">
+        <div class="dash-top">
+          <div>
+            <h2>Offers Dashboard</h2>
+            <p style="color:var(--text3);font-size:.85rem;margin-top:4px">Publish, manage and remove daily offers for your customers</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn-sm btn-outline" onclick="showPage('pg-offers')">View Public Offers Page →</button>
+            <button class="btn-sm btn-danger" onclick="doLogout()">Log Out</button>
+          </div>
+        </div>
+
+        <!-- ADD FORM -->
+        <div class="add-form-card">
+          <h3>➕ Publish New Offer</h3>
+          <div class="form-r2">
+            <div class="fg"><label>Offer Title *</label><input type="text" id="oTitle" placeholder="e.g. Fresh Mango – Season Special"></div>
+            <div class="fg">
+              <label>Category</label>
+              <select id="oCat">
+                <option value="sale">Sale</option>
+                <option value="new">New Arrival</option>
+                <option value="special">Special Offer</option>
+                <option value="clearance">Clearance</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-r2">
+            <div class="fg"><label>Discount / Price Info</label><input type="text" id="oDiscount" placeholder="e.g. 30% Off  or  ₹99 only"></div>
+            <div class="fg"><label>Valid Until</label><input type="date" id="oDate"></div>
+          </div>
+          <div class="fg"><label>Description</label><textarea id="oDesc" placeholder="Describe the offer in detail for customers..."></textarea></div>
+          <div class="form-r2">
+            <div class="fg">
+              <label>Offer Image (JPG / PNG) *</label>
+              <div class="upload-zone">
+                <input type="file" accept="image/*" id="oImg" onchange="handleImg(this)">
+                <span class="uz-icon">🖼️</span>
+                <div class="uz-tx"><strong>Click or drag image here</strong>JPG, PNG, WEBP supported</div>
+                <div class="preview-box" id="imgPrev"><img id="imgPrevEl" src="" alt="preview"></div>
+              </div>
+            </div>
+            <div class="fg">
+              <label>Offer PDF (optional)</label>
+              <div class="upload-zone">
+                <input type="file" accept=".pdf" id="oPdf" onchange="handlePdf(this)">
+                <span class="uz-icon">📄</span>
+                <div class="uz-tx"><strong>Click or drag PDF here</strong>Attach a detailed offer brochure</div>
+                <div class="pdf-name-tag" id="pdfTag"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-submit-row">
+            <button class="submit-gold" onclick="addOffer()">Publish Offer to Website →</button>
+          </div>
+        </div>
+
+        <!-- MANAGE -->
+        <div class="manage-card">
+          <h3>Published Offers <span id="oCount">0 offers live</span></h3>
+          <div class="admin-list" id="adminList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- end pg-admin -->
+
+<script>
+// ── CREDENTIALS ──
+const ADMIN_USER = 'ecshoppi';
+const ADMIN_PASS = 'shoppi2024';
+
+// ── STATE ──
+let offers = [];
+let imgData = null, pdfData = null, pdfFileName = '';
+let currentFilter = 'all';
+
+// ── STORAGE ──
+function loadOffers(){
+  try{ offers = JSON.parse(localStorage.getItem('ecshoppi_v3')||'[]'); }
+  catch(e){ offers=[]; }
+}
+function saveOffers(){ localStorage.setItem('ecshoppi_v3', JSON.stringify(offers)); }
+
+// ── PAGE NAV ──
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='pg-offers') renderOffers();
+  if(id==='pg-admin'){
+    const ok = sessionStorage.getItem('ecadmin')==='1';
+    document.getElementById('loginSection').style.display = ok?'none':'flex';
+    document.getElementById('dashSection').style.display = ok?'block':'none';
+    if(ok) renderAdmin();
+  }
+}
+
+// ── DATE ──
+function initDate(){
+  const d = new Date();
+  const el = document.getElementById('todayDate');
+  if(el) el.textContent = d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const fd = document.getElementById('oDate');
+  if(fd) fd.valueAsDate = d;
+}
+
+// ── HEADER SCROLL ──
+window.addEventListener('scroll',()=>{
+  const h = document.getElementById('hdr');
+  if(h) h.classList.toggle('scrolled', window.scrollY>20);
+});
+
+// ── HAMBURGER ──
+document.getElementById('ham').addEventListener('click',()=>{
+  document.getElementById('mobNav').classList.toggle('open');
+});
+function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
+
+// ── LOGIN ──
+function doLogin(){
+  const u = document.getElementById('lUser').value.trim();
+  const p = document.getElementById('lPass').value;
+  const err = document.getElementById('lErr');
+  const btn = document.getElementById('lBtn');
+  btn.textContent='Verifying…'; btn.disabled=true;
+  setTimeout(()=>{
+    if(u===ADMIN_USER && p===ADMIN_PASS){
+      sessionStorage.setItem('ecadmin','1');
+      err.classList.remove('show');
+      document.getElementById('loginSection').style.display='none';
+      document.getElementById('dashSection').style.display='block';
+      renderAdmin();
+    } else {
+      err.classList.add('show');
+    }
+    btn.textContent='Sign In to Dashboard →'; btn.disabled=false;
+  },700);
+}
+function doLogout(){
+  sessionStorage.removeItem('ecadmin');
+  document.getElementById('loginSection').style.display='flex';
+  document.getElementById('dashSection').style.display='none';
+  document.getElementById('lUser').value='';
+  document.getElementById('lPass').value='';
+}
+document.getElementById('lPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+// ── FILE HANDLERS ──
+function handleImg(input){
+  const file=input.files[0]; if(!file)return;
+  new FileReader().onload=e=>{
+    imgData=e.target.result;
+    document.getElementById('imgPrevEl').src=imgData;
+    document.getElementById('imgPrev').style.display='block';
+  }; new FileReader().readAsDataURL && (()=>{const r=new FileReader();r.onload=e=>{imgData=e.target.result;document.getElementById('imgPrevEl').src=imgData;document.getElementById('imgPrev').style.display='block';};r.readAsDataURL(file);})();
+}
+function handlePdf(input){
+  const file=input.files[0]; if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{ pdfData=e.target.result; pdfFileName=file.name; const pt=document.getElementById('pdfTag'); pt.textContent='📄 '+file.name; pt.style.display='block'; };
+  r.readAsDataURL(file);
+}
+
+// ── ADD OFFER ──
+function addOffer(){
+  const title=document.getElementById('oTitle').value.trim();
+  if(!title){showToast('⚠️ Please enter an offer title'); return;}
+  const offer={
+    id:Date.now(),
+    title,
+    category:document.getElementById('oCat').value,
+    discount:document.getElementById('oDiscount').value.trim(),
+    validUntil:document.getElementById('oDate').value,
+    description:document.getElementById('oDesc').value.trim(),
+    image:imgData, pdf:pdfData, pdfName:pdfFileName,
+    createdAt:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})
+  };
+  offers.unshift(offer); saveOffers();
+  ['oTitle','oDiscount','oDesc'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('oImg').value='';
+  document.getElementById('oPdf').value='';
+  document.getElementById('imgPrev').style.display='none';
+  document.getElementById('pdfTag').style.display='none';
+  imgData=null; pdfData=null; pdfFileName='';
+  renderAdmin();
+  showToast('✓ Offer published successfully!');
+}
+
+// ── DELETE ──
+function delOffer(id){
+  if(!confirm('Remove this offer from the website?')) return;
+  offers=offers.filter(o=>o.id!==id); saveOffers(); renderAdmin(); showToast('Offer removed.');
+}
+
+// ── FILTER ──
+function filterOffers(type,btn){
+  currentFilter=type;
+  document.querySelectorAll('.f-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderOffers();
+}
+
+// ── RENDER OFFERS ──
+function renderOffers(){
+  const grid=document.getElementById('offersGrid');
+  const filtered=currentFilter==='all'?offers:offers.filter(o=>o.category===currentFilter);
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty"><span class="ei">🏷️</span><h3>No offers yet</h3><p>Check back soon — our team adds fresh deals daily!</p></div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(o=>`
+    <div class="offer-card" onclick="openModal(${o.id})">
+      ${o.image?`<img class="oc-img" src="${o.image}" alt="${esc(o.title)}">`:`<div class="oc-placeholder"><span style="font-size:3rem;opacity:.3">🏷️</span><span style="font-size:.75rem;color:var(--text3)">No Image</span></div>`}
+      <div class="oc-body">
+        <span class="oc-tag ${o.category==='new'?'fresh':''}">${catLabel(o.category)}</span>
+        <div class="oc-name">${esc(o.title)}</div>
+        ${o.description?`<div class="oc-desc">${esc(o.description.length>90?o.description.slice(0,90)+'…':o.description)}</div>`:''}
+        <div class="oc-foot">
+          <span class="oc-price">${esc(o.discount||'Special Price')}</span>
+          <span class="oc-meta">
+            ${o.validUntil?`<span>Until ${fmtDate(o.validUntil)}</span>`:''}
+            ${o.pdf?`<span class="pdf-chip">📄 PDF</span>`:''}
+          </span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER ADMIN ──
+function renderAdmin(){
+  const list=document.getElementById('adminList');
+  const cnt=document.getElementById('oCount');
+  cnt.textContent=offers.length+' offer'+(offers.length!==1?'s':'')+' live';
+  if(!offers.length){
+    list.innerHTML=`<div style="text-align:center;padding:48px;color:var(--text3)">No offers published yet. Add your first offer above!</div>`;
+    return;
+  }
+  list.innerHTML=offers.map(o=>`
+    <div class="ali">
+      <div class="ali-thumb">${o.image?`<img src="${o.image}" alt="">`:'🏷️'}</div>
+      <div class="ali-info">
+        <div class="ali-name">${esc(o.title)}</div>
+        <div class="ali-meta">
+          <span>${catLabel(o.category)}</span>
+          ${o.discount?`<span>${esc(o.discount)}</span>`:''}
+          ${o.validUntil?`<span>Until ${fmtDate(o.validUntil)}</span>`:''}
+          <span>Added ${o.createdAt}</span>
+          ${o.pdf?`<span>📄 PDF attached</span>`:''}
+        </div>
+      </div>
+      <button class="ali-del" title="Remove offer" onclick="delOffer(${o.id})">🗑</button>
+    </div>
+  `).join('');
+}
+
+// ── MODAL ──
+function openModal(id){
+  const o=offers.find(x=>x.id===id); if(!o) return;
+  document.getElementById('modal-content').innerHTML=`
+    ${o.image?`<img class="modal-img-top" src="${o.image}" alt="${esc(o.title)}">`:`<div style="height:120px;background:var(--cream2);border-radius:var(--r2) var(--r2) 0 0;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:.35">🏷️</div>`}
+    <div class="modal-body-inner">
+      <div class="m-tag">${catLabel(o.category)}</div>
+      <h2>${esc(o.title)}</h2>
+      ${o.description?`<p class="m-desc">${esc(o.description)}</p>`:''}
+      <div class="m-grid">
+        ${o.discount?`<div class="m-info"><div class="ml">Discount / Price</div><div class="mv gold">${esc(o.discount)}</div></div>`:''}
+        ${o.validUntil?`<div class="m-info"><div class="ml">Valid Until</div><div class="mv">${fmtDate(o.validUntil)}</div></div>`:''}
+        <div class="m-info"><div class="ml">Added On</div><div class="mv">${o.createdAt}</div></div>
+        <div class="m-info"><div class="ml">Category</div><div class="mv">${catLabel(o.category)}</div></div>
+      </div>
+      ${o.pdf?`<a class="pdf-dl-btn" href="${o.pdf}" download="${esc(o.pdfName||'ec-shoppi-offer.pdf')}">📄 Download Offer PDF</a>`:''}
+    </div>
+  `;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ── CONTACT FORM ──
+function submitContactForm(){
+  const btn=document.getElementById('cFormBtn');
+  btn.textContent='Sending…'; btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('contactFormBody').style.display='none';
+    document.getElementById('cFormSuccess').style.display='block';
+  },1000);
+}
+
+// ── HELPERS ──
+function catLabel(c){return{sale:'Sale',new:'New Arrival',special:'Special Offer',clearance:'Clearance'}[c]||c;}
+function fmtDate(d){if(!d)return'';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── SCROLL REVEAL ──
+const revEls=document.querySelectorAll('.rev');
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}});
+},{threshold:0.1});
+revEls.forEach(el=>revObs.observe(el));
+
+// ── ABOUT GRID RESPONSIVE ──
+function checkAboutGrid(){
+  const g=document.querySelector('.about-grid-r');
+  if(!g)return;
+  if(window.innerWidth<1024){g.style.gridTemplateColumns='1fr';}
+  else{g.style.gridTemplateColumns='1fr 1fr';}
+}
+checkAboutGrid();
+window.addEventListener('resize',checkAboutGrid);
+
+// ── HERO ANIMATION ──
+const stage=document.getElementById('animStage');
+const shelfItems=['🥦','🍎','🥕','🍌','🍅','🧅','🥑','🍊','🍋','🥬','🌽','🍇','🥝','🫐'];
+const flyItems=['🥛','🧃','🍫','🥤','🧁','🍞','🥩','🦐','📱','👗','🧴','🧹'];
+let animPhase=0;
+let shopElements=[];
+
+function clearStageItems(){
+  shopElements.forEach(el=>{if(el.parentNode)el.parentNode.removeChild(el);});
+  shopElements=[];
+}
+
+function placeShelfItems(){
+  clearStageItems();
+  // Place items on shelf positions
+  const positions=[
+    {left:'10%',bottom:'62%'},{left:'22%',bottom:'62%'},{left:'34%',bottom:'62%'},
+    {left:'46%',bottom:'62%'},{left:'58%',bottom:'62%'},{left:'70%',bottom:'62%'},
+    {left:'10%',bottom:'42%'},{left:'22%',bottom:'42%'},{left:'34%',bottom:'42%'},
+    {left:'46%',bottom:'42%'},{left:'58%',bottom:'42%'},{left:'70%',bottom:'42%'},
+  ];
+  positions.forEach((pos,i)=>{
+    const item=document.createElement('div');
+    item.className='float-item';
+    item.textContent=shelfItems[i%shelfItems.length];
+    item.style.left=pos.left;
+    item.style.bottom=pos.bottom;
+    item.style.fontSize='1.9rem';
+    item.style.animationDelay=(i*0.08)+'s';
+    stage.appendChild(item);
+    shopElements.push(item);
+  });
+}
+
+function spawnMan(){
+  const man=document.createElement('div');
+  man.className='man-wrap';
+  man.style.bottom='60px';
+  // SVG man with cart
+  man.innerHTML=`<svg width="64" height="90" viewBox="0 0 64 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <circle cx="32" cy="14" r="10" fill="#C9A84C"/>
+    <rect x="22" y="24" width="20" height="28" rx="6" fill="#8B6914"/>
+    <!-- Arms -->
+    <rect x="10" y="26" width="12" height="5" rx="2.5" fill="#8B6914" transform="rotate(15 10 26)"/>
+    <rect x="42" y="26" width="12" height="5" rx="2.5" fill="#8B6914" transform="rotate(-15 54 26)"/>
+    <!-- Legs -->
+    <rect x="22" y="50" width="8" height="22" rx="4" fill="#3D2E18"/>
+    <rect x="34" y="50" width="8" height="22" rx="4" fill="#3D2E18"/>
+    <!-- Feet -->
+    <ellipse cx="26" cy="72" rx="8" ry="4" fill="#1A1208"/>
+    <ellipse cx="38" cy="72" rx="8" ry="4" fill="#1A1208"/>
+    <!-- Shopping bag -->
+    <rect x="44" y="32" width="16" height="20" rx="4" fill="#E8C97A" stroke="#C9A84C" stroke-width="1.5"/>
+    <path d="M47 32 Q47 26 52 26 Q57 26 57 32" stroke="#C9A84C" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <text x="52" y="44" text-anchor="middle" font-size="9" fill="#8B6914" font-weight="700">EC</text>
+  </svg>`;
+  man.style.zIndex='5';
+  stage.appendChild(man);
+  shopElements.push(man);
+  return man;
+}
+
+function flyItemsToCart(){
+  const cartEl=document.createElement('div');
+  cartEl.className='cart-wrap';
+  cartEl.innerHTML=`<svg class="cart-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="20" width="54" height="34" rx="8" fill="white" stroke="#C9A84C" stroke-width="2"/>
+    <path d="M8 12 L16 20" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="24" cy="62" r="6" fill="#8B6914"/>
+    <circle cx="56" cy="62" r="6" fill="#8B6914"/>
+    <text x="37" y="41" text-anchor="middle" font-size="14" fill="#C9A84C" font-weight="900" font-family="serif">EC</text>
+    <!-- Speed lines -->
+    <line x1="2" y1="28" x2="14" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <line x1="4" y1="35" x2="14" y2="35" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+    <line x1="6" y1="42" x2="14" y2="42" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  </svg>`;
+  stage.appendChild(cartEl);
+  shopElements.push(cartEl);
+
+  // Fly items one by one
+  const toFly=flyItems.slice(0,6);
+  const stageRect=stage.getBoundingClientRect();
+  toFly.forEach((emoji,i)=>{
+    setTimeout(()=>{
+      const fly=document.createElement('div');
+      fly.className='fly-item';
+      fly.textContent=emoji;
+      const startLeft=Math.random()*60+10;
+      const startBottom=Math.random()*40+30;
+      fly.style.left=startLeft+'%';
+      fly.style.bottom=startBottom+'%';
+      fly.style.animationDelay='0s';
+      stage.appendChild(fly);
+      shopElements.push(fly);
+      setTimeout(()=>{if(fly.parentNode)fly.parentNode.removeChild(fly);},1300);
+    },i*280);
+  });
+
+  // Show pop badge after items fly
+  setTimeout(()=>{
+    const pop=document.createElement('div');
+    pop.className='ec-pop';
+    pop.textContent='🛒 EC Shoppi!';
+    stage.appendChild(pop);
+    shopElements.push(pop);
+    setTimeout(()=>{
+      if(pop.parentNode)pop.parentNode.removeChild(pop);
+    },2500);
+  },toFly.length*280+400);
+}
+
+function runAnimation(){
+  clearStageItems();
+  // Phase 1: show shelf with items
+  placeShelfItems();
+  // Phase 2: man walks in
+  setTimeout(()=>{ spawnMan(); },1500);
+  // Phase 3: items fly into cart
+  setTimeout(()=>{ flyItemsToCart(); },4500);
+  // Restart
+  setTimeout(()=>{ runAnimation(); },10000);
+}
+
+// Start animation after a short delay
+setTimeout(runAnimation, 500);
+
+// ── ADMIN PAGE URL ──
+// Access admin via URL hash: add #admin to URL
+function checkHash(){
+  if(location.hash==='#admin') showPage('pg-admin');
+}
+checkHash();
+window.addEventListener('hashchange',checkHash);
+
+// ── INIT ──
+loadOffers();
+initDate();
+renderOffers();
+</script>
+</body>
+</html>
